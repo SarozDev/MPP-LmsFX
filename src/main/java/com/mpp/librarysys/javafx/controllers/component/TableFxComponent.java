@@ -26,7 +26,7 @@ public class TableFxComponent extends AppAbstractFxController {
         return vBox;
     }
 
-    public void showScreen(TableView tableView, ObservableList obsDataList, List<String> columns) {
+    public void showScreen(TableView tableView, ObservableList<?> obsDataList, List<String> columns) {
         tableView.setItems(obsDataList);
         tableView.getColumns().clear();
         for (String column : columns) {
@@ -34,6 +34,7 @@ public class TableFxComponent extends AppAbstractFxController {
             tc.setCellValueFactory(new PropertyValueFactory(column));
             tableView.getColumns().add(tc);
         }
+
     }
 
 }
