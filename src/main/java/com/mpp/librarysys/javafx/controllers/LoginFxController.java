@@ -58,7 +58,7 @@ public class LoginFxController extends AppAbstractFxController {
         // closes current stage
         getStage().close();
 
-        if (true) {
+        if (false) {
             // opens admin dash view
             Stage adminDashStage = new Stage();
             adminDashStage.setTitle("Admin Dash View");

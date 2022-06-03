@@ -44,15 +44,17 @@ public class BookService {
         return (ObservableList<T>) bookEntities;
     }
 
-    public <T> ObservableList<T> getAllBookCopiesForSelectedBook(String bookName) {
+    public <T> ObservableList<T> getAllBookCopiesForSelectedBook(Book selectedBook) {
         ObservableList<BookCopy> bookEntities = FXCollections.observableArrayList();
         BookCopy book = new BookCopy();
         book.setCopyNumber("4");
         book.setId(1);
+        book.setBook(selectedBook);
 
         BookCopy book1 = new BookCopy();
-        book.setCopyNumber("2");
-        book.setId(2);
+        book1.setCopyNumber("2");
+        book1.setId(2);
+        book1.setBook(selectedBook);
         bookEntities.add(book);
         return (ObservableList<T>) bookEntities;
     }
