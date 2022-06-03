@@ -12,7 +12,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column
     private String userName;
+
+    @Column
     private String password;
 
     private String firstName;
@@ -21,7 +24,7 @@ public class User {
 
     private String contact;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
 

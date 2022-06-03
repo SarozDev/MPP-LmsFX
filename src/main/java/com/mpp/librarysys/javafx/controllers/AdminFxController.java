@@ -73,7 +73,7 @@ public class AdminFxController extends AppAbstractFxController {
         // Tab 1: User List view
         List<String> columnList = Arrays.asList("id", "userName", "firstName");
         ObservableList<User> userObs = userService.<User>getUserObs();
-        VBox usersTableView = tableFxComponent.createTableView(userObs, columnList);
+        VBox usersTableView = tableFxComponent.createTableViewVBox(userObs, columnList);
 
         Tab allMembersTab = membersTabPane.getTabs().get(0);
         allMembersTab.setContent(usersTableView);
@@ -94,7 +94,7 @@ public class AdminFxController extends AppAbstractFxController {
         // Tab 1: Books List view
         List<String> columnList = Arrays.asList("id", "title", "iSBNNumber");
         ObservableList<Book> books = bookService.getBooksObs();
-        VBox booksTableView = tableFxComponent.createTableView(books, columnList);
+        VBox booksTableView = tableFxComponent.createTableViewVBox(books, columnList);
 
         Tab allBooksTab = bookTabPane.getTabs().get(0);
         allBooksTab.setContent(booksTableView);
@@ -107,5 +107,6 @@ public class AdminFxController extends AppAbstractFxController {
 
 
     }
+
 
 }

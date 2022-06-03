@@ -1,15 +1,14 @@
 package com.mpp.librarysys.lms.entities;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class BookCopy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private int copyNumber;
-    private boolean isAvailable;
+    private String copyNumber;
+    private Boolean isAvailable;
 
     @ManyToOne
     @JoinColumn(name = "book_id")
@@ -34,19 +33,19 @@ public class BookCopy {
         this.id = id;
     }
 
-    public int getCopyNumber() {
+    public String getCopyNumber() {
         return copyNumber;
     }
 
-    public void setCopyNumber(int copyNumber) {
+    public void setCopyNumber(String copyNumber) {
         this.copyNumber = copyNumber;
     }
 
-    public boolean isAvailable() {
+    public Boolean getIsAvailable() {
         return isAvailable;
     }
 
-    public void setAvailable(boolean available) {
+    public void setAvailable(Boolean available) {
         isAvailable = available;
     }
 

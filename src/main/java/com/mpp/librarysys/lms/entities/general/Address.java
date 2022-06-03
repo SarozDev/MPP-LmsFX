@@ -1,6 +1,9 @@
 package com.mpp.librarysys.lms.entities.general;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Address {
@@ -9,9 +12,7 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name = "state_id")
-    private State state;
+    private String state;
 
     private String street;
 
@@ -28,35 +29,35 @@ public class Address {
         this.id = id;
     }
 
-    public State getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(State state) {
+    public void setState(String state) {
         this.state = state;
     }
 
-    public String getStreet() {
+    public java.lang.String getStreet() {
         return street;
     }
 
-    public void setStreet(String street) {
+    public void setStreet(java.lang.String street) {
         this.street = street;
     }
 
-    public String getZip() {
+    public java.lang.String getZip() {
         return zip;
     }
 
-    public void setZip(String zip) {
+    public void setZip(java.lang.String zip) {
         this.zip = zip;
     }
 
-    public String getCity() {
+    public java.lang.String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(java.lang.String city) {
         this.city = city;
     }
 }

@@ -14,15 +14,18 @@ import java.util.List;
 @Component
 public class TableFxComponent extends AppAbstractFxController {
 
+    private TableView tableView;
+
     @FXML
     public void initialize() {
     }
 
-    public VBox createTableView(ObservableList<?> observableList, List<String> columns) {
+    public VBox createTableViewVBox(ObservableList<?> observableList, List<String> columns) {
 
         TableView tableView = new TableView();
         showScreen(tableView, observableList, columns);
         VBox vBox = new VBox(tableView);
+        this.tableView = tableView;
         return vBox;
     }
 
@@ -37,4 +40,10 @@ public class TableFxComponent extends AppAbstractFxController {
 
     }
 
+    public TableView getTableView() {
+        if(null == this.tableView) {
+            this.tableView = new TableView();
+        }
+        return tableView;
+    }
 }

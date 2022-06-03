@@ -1,7 +1,6 @@
 package com.mpp.librarysys.lms.entities;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,6 +16,7 @@ public class Book {
     private Author author;
 
 
+//    @OneToMany(cascade = CascadeType.ALL)
 //    private Set<BookCopy> bookCopies;
 
     @ManyToOne
@@ -63,14 +63,6 @@ public class Book {
     }
 
     public void setISBNNumber(String iSBNNumber) {
-        this.iSBNNumber = iSBNNumber;
-    }
-
-    public String getiSBNNumber() {
-        return iSBNNumber;
-    }
-
-    public void setiSBNNumber(String iSBNNumber) {
         this.iSBNNumber = iSBNNumber;
     }
 

@@ -10,86 +10,91 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox fx:id="bookFormVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="358.0" prefWidth="565.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mpp.librarysys.javafx.controllers.AddBookController">
-   <children>
-      <HBox prefHeight="50.0" prefWidth="593.0">
-         <children>
-            <Label text="Book Title">
-               <HBox.margin>
-                  <Insets left="8.0" right="5.0" top="10.0" />
-               </HBox.margin>
-            </Label>
-            <TextField promptText="Enter Book Title">
-               <HBox.margin>
-                  <Insets top="6.0" />
-               </HBox.margin>
-            </TextField>
-            <Label text="Book ISBN">
-               <padding>
-                  <Insets bottom="2.0" left="9.0" right="4.0" top="2.0" />
-               </padding>
-               <HBox.margin>
-                  <Insets left="35.0" right="5.0" top="8.0" />
-               </HBox.margin>
-            </Label>
-            <TextField promptText="Enter Book ISBN">
-               <HBox.margin>
-                  <Insets top="8.0" />
-               </HBox.margin>
-            </TextField>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="67.0" prefWidth="597.0">
-         <children>
-            <Label text="Author">
-               <HBox.margin>
-                  <Insets right="4.0" />
-               </HBox.margin>
-            </Label>
-            <ComboBox prefWidth="150.0" />
-            <Hyperlink alignment="CENTER" text="Add Author">
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </Hyperlink>
-         </children>
-      </HBox>
-      <HBox prefHeight="66.0" prefWidth="593.0">
-         <children>
-            <HBox prefHeight="61.0" prefWidth="489.0">
-               <children>
-                  <Label text="CopyNumber">
-                     <HBox.margin>
-                        <Insets right="5.0" top="4.0" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField prefHeight="26.0" prefWidth="74.0" />
-                  <Label text="IsAvailable">
-                     <HBox.margin>
-                        <Insets left="10.0" top="4.0" />
-                     </HBox.margin>
-                  </Label>
-                  <CheckBox mnemonicParsing="false" text="IsAvailable">
-                     <HBox.margin>
-                        <Insets left="15.0" top="4.0" />
-                     </HBox.margin>
-                  </CheckBox>
-                  <Button mnemonicParsing="false" text="Add Copy">
-                     <HBox.margin>
-                        <Insets left="15.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-               <opaqueInsets>
-                  <Insets left="10.0" />
-               </opaqueInsets>
-               <padding>
-                  <Insets left="15.0" top="10.0" />
-               </padding>
-            </HBox>
-         </children>
-      </HBox>
-      <HBox prefHeight="26.0" prefWidth="548.0" />
-   </children>
+<VBox fx:id="bookFormVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mpp.librarysys.javafx.controllers.AddBookController">
+    <children>
+        <HBox prefHeight="50.0" prefWidth="593.0">
+            <children>
+                <Label text="Book Title">
+                    <HBox.margin>
+                        <Insets left="8.0" right="5.0" top="10.0" />
+                    </HBox.margin>
+                </Label>
+                <TextField fx:id="titleField" promptText="Enter Book Title">
+                    <HBox.margin>
+                        <Insets top="6.0" />
+                    </HBox.margin>
+                </TextField>
+                <Label text="Book ISBN">
+                    <padding>
+                        <Insets bottom="2.0" left="9.0" right="4.0" top="2.0" />
+                    </padding>
+                    <HBox.margin>
+                        <Insets left="35.0" right="5.0" top="8.0" />
+                    </HBox.margin>
+                </Label>
+                <TextField fx:id="isbnField" promptText="Enter Book ISBN">
+                    <HBox.margin>
+                        <Insets top="8.0" />
+                    </HBox.margin>
+                </TextField>
+            </children>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="67.0" prefWidth="597.0">
+            <children>
+                <Label text="Author">
+                    <HBox.margin>
+                        <Insets right="4.0" />
+                    </HBox.margin>
+                </Label>
+                <ComboBox prefWidth="150.0" />
+                <Hyperlink alignment="CENTER" text="Add Author">
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                </Hyperlink>
+            </children>
+        </HBox>
+        <HBox prefHeight="66.0" prefWidth="593.0">
+            <children>
+                <HBox prefHeight="61.0" prefWidth="489.0">
+                    <children>
+                        <Label text="CopyNumber">
+                            <HBox.margin>
+                                <Insets right="5.0" top="4.0" />
+                            </HBox.margin>
+                        </Label>
+                        <TextField fx:id="bookCopyNumField" prefHeight="26.0" prefWidth="74.0" />
+                        <Label text="IsAvailable">
+                            <HBox.margin>
+                                <Insets left="10.0" top="4.0" />
+                            </HBox.margin>
+                        </Label>
+                        <CheckBox fx:id="bookCopyIsAvailable" mnemonicParsing="false" text="IsAvailable">
+                            <HBox.margin>
+                                <Insets left="15.0" top="4.0" />
+                            </HBox.margin>
+                        </CheckBox>
+                        <Button fx:id="btnAddBookCopy" mnemonicParsing="false" text="Add Copy">
+                            <HBox.margin>
+                                <Insets left="15.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                    <opaqueInsets>
+                        <Insets left="10.0" />
+                    </opaqueInsets>
+                    <padding>
+                        <Insets left="15.0" top="10.0" />
+                    </padding>
+                </HBox>
+            </children>
+        </HBox>
+        <HBox fx:id="bookCopiesHBox" prefHeight="161.0" prefWidth="597.0" VBox.vgrow="ALWAYS">
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="52.0" prefWidth="565.0">
+            <children>
+                <Button fx:id="btnAddBook" mnemonicParsing="false" text="Save" />
+            </children>
+        </HBox>
+    </children>
 </VBox>

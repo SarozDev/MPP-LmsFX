@@ -14,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-
 @Component
 public class LoginFxController extends AppAbstractFxController {
 
@@ -35,7 +33,7 @@ public class LoginFxController extends AppAbstractFxController {
 
 
     @FXML
-    public void initialize() throws IOException {
+    public void initialize()  {
         this.loginButton.setOnAction(actionEvent -> {
             onLoginClick();
         });
@@ -60,7 +58,7 @@ public class LoginFxController extends AppAbstractFxController {
         // closes current stage
         getStage().close();
 
-        if (false) {
+        if (true) {
             // opens admin dash view
             Stage adminDashStage = new Stage();
             adminDashStage.setTitle("Admin Dash View");
