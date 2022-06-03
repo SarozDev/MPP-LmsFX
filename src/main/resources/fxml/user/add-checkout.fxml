@@ -19,12 +19,12 @@
                   <Insets left="15.0" top="25.0" />
                </HBox.margin>
             </Label>
-            <TextField promptText="Enter Book Name">
+            <TextField fx:id="bookField" promptText="Enter Book Name">
                <HBox.margin>
                   <Insets left="9.0" top="20.0" />
                </HBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" text="Search">
+            <Button fx:id="btnSearch" mnemonicParsing="false" text="Search">
                <HBox.margin>
                   <Insets left="40.0" top="18.0" />
                </HBox.margin>
@@ -42,19 +42,19 @@
             <VBox>
                <children>
                   <Label text="Book" />
-                  <ComboBox prefWidth="150.0" />
+                  <ComboBox fx:id="comboBook" prefWidth="150.0" />
                   <Label text="Book Copy">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <ComboBox prefWidth="150.0" />
+                  <ComboBox fx:id="comboBookCopy" prefWidth="150.0" />
                   <Label text="Library Member">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <ComboBox prefWidth="150.0" />
+                  <ComboBox fx:id="libMemberField" prefWidth="150.0" />
                </children>
                <HBox.margin>
                   <Insets left="13.0" />
@@ -63,13 +63,13 @@
             <VBox>
                <children>
                   <Label text="Check out Date" />
-                  <DatePicker />
+                  <DatePicker fx:id="checkOutDateField"/>
                   <Label text="Due Date">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <DatePicker />
+                  <DatePicker fx:id="dueDateField"/>
                </children>
                <HBox.margin>
                   <Insets left="50.0" />
@@ -79,12 +79,12 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="89.0" prefWidth="598.0">
          <children>
-            <Button mnemonicParsing="false" text="Save">
+            <Button fx:id="btnSave" mnemonicParsing="false" text="Save">
                <HBox.margin>
                   <Insets right="12.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Cancel" />
+            <Button fx:id="btnCancel" mnemonicParsing="false" text="Cancel" />
          </children>
       </HBox>
    </children>
