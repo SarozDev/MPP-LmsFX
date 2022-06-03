@@ -2,6 +2,7 @@ package com.mpp.librarysys.lms.services;
 
 import com.mpp.librarysys.lms.entities.Book;
 import com.mpp.librarysys.lms.entities.CheckOutRecordBook;
+import com.mpp.librarysys.lms.entities.LibraryMember;
 import com.mpp.librarysys.lms.entities.User;
 import com.mpp.librarysys.lms.entities.enums.RoleEnum;
 import com.mpp.librarysys.lms.repository.BookRepository;
@@ -34,26 +35,37 @@ public class CheckoutService {
         return bookList;
     }
 
-    public <T> ObservableList<T> getCheckOutObs() {
+    public static <T> ObservableList<T> getCheckOutObs() {
         ObservableList<CheckOutRecordBook> userEntities = FXCollections.observableArrayList();
 
-        CheckOutRecordBook user = new CheckOutRecordBook();
-        user.setCheckOutDate(LocalDate.now());
-        user.setDueDate(LocalDate.now().plusDays(5));
+        CheckOutRecordBook check = new CheckOutRecordBook();
+        check.setCheckOutDate(LocalDate.now());
+        check.setDueDate(LocalDate.now().plusDays(5));
 
 
-        CheckOutRecordBook user1 = new CheckOutRecordBook();
-        user.setCheckOutDate(LocalDate.now());
-        user.setDueDate(LocalDate.now().plusDays(7));
+        CheckOutRecordBook check1 = new CheckOutRecordBook();
+        check1.setCheckOutDate(LocalDate.now());
+        check1.setDueDate(LocalDate.now().plusDays(7));
 
-        CheckOutRecordBook user2 = new CheckOutRecordBook();
-        user.setCheckOutDate(LocalDate.now());
-        user.setDueDate(LocalDate.now().plusDays(8));
+        CheckOutRecordBook check2 = new CheckOutRecordBook();
+        check2.setCheckOutDate(LocalDate.now());
+        check2.setDueDate(LocalDate.now().plusDays(8));
 
-        userEntities.add(user);
-        userEntities.add(user1);
-        userEntities.add(user2);
+        userEntities.add(check);
+        userEntities.add(check1);
+        userEntities.add(check2);
         return (ObservableList<T>) userEntities;
+    }
+
+    public static <T> ObservableList<T> getMembersById(long id) {
+        ObservableList<CheckOutRecordBook> checkOutRecordBooks = FXCollections.observableArrayList();
+        CheckOutRecordBook checkOutRecordBook = new CheckOutRecordBook();
+
+        checkOutRecordBook.setCheckOutDate(LocalDate.now());
+        checkOutRecordBook.setDueDate(LocalDate.now().plusDays(7));
+        checkOutRecordBooks.add(checkOutRecordBook);
+
+        return (ObservableList<T>) checkOutRecordBooks;
     }
 
 }
