@@ -2,7 +2,7 @@ package com.mpp.librarysys.javafx.controllers;
 
 import com.mpp.librarysys.javafx.controllers.component.TableFxComponent;
 import com.mpp.librarysys.javafx.helper.AppAbstractFxController;
-import com.mpp.librarysys.lms.entities.TestBookEntity;
+import com.mpp.librarysys.lms.entities.Book;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -35,15 +35,21 @@ public class AdminFxController extends AppAbstractFxController {
     public void populateNewData() {
         tableFxComponent.setStage(getStage());
         System.out.println(getStage().getProperties().get("Test"));
-        List<String> columnList = Arrays.asList("id", "bookName", "isbn");
-        ObservableList<TestBookEntity> books = getBooks();
+        List<String> columnList = Arrays.asList("id", "title", "iSBNNumber");
+        ObservableList<Book> books = getBooks();
         rightVBox.getChildren().add(tableFxComponent.createTableView(books, columnList));
     }
 
-    private ObservableList<TestBookEntity> getBooks() {
-        ObservableList<TestBookEntity> bookEntities = FXCollections.observableArrayList();
-        bookEntities.add(new TestBookEntity(1, "Java", 123));
-        bookEntities.add(new TestBookEntity(2, "Spring", 234));
+    private ObservableList<Book> getBooks() {
+        ObservableList<Book> bookEntities = FXCollections.observableArrayList();
+        Book book = new Book();
+        book.setTitle("Java");
+        book.setId(1);
+        Book book1 = new Book();
+        book1.setTitle("Spring");
+        book1.setId(2);
+        bookEntities.add(book);
+        bookEntities.add(book1);
         return bookEntities;
     }
 

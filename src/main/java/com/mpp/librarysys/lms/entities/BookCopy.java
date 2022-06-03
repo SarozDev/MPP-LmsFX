@@ -11,8 +11,20 @@ public class BookCopy {
     private int copyNumber;
     private boolean isAvailable;
 
-    @OneToMany
-    private List<CheckOutRecordBook> checkOutRecordBooks;
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+//    @OneToMany
+//    private List<CheckOutRecordBook> checkOutRecordBooks;
 
     public long getId() {
         return id;
@@ -38,11 +50,13 @@ public class BookCopy {
         isAvailable = available;
     }
 
-    public List<CheckOutRecordBook> getCheckOutRecordBooks() {
-        return checkOutRecordBooks;
-    }
+//    public List<CheckOutRecordBook> getCheckOutRecordBooks() {
+//        return checkOutRecordBooks;
+//    }
+//
+//    public void setCheckOutRecordBooks(List<CheckOutRecordBook> checkOutRecordBooks) {
+//        this.checkOutRecordBooks = checkOutRecordBooks;
+//    }
 
-    public void setCheckOutRecordBooks(List<CheckOutRecordBook> checkOutRecordBooks) {
-        this.checkOutRecordBooks = checkOutRecordBooks;
-    }
+
 }

@@ -2,6 +2,7 @@ package com.mpp.librarysys.lms.entities;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Book {
@@ -10,10 +11,36 @@ public class Book {
     private long id;
     private String title;
     private String iSBNNumber;
-    @OneToMany
-    private List<BookCopy> bookCopies;
-    @OneToMany
-    private List<BookAuthor> bookAuthors;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    private Author author;
+
+
+//    private Set<BookCopy> bookCopies;
+
+    @ManyToOne
+    @JoinColumn(name = "borrow_rule_id")
+    private BorrowRule borrowRule;
+
+    public BorrowRule getBorrowRule() {
+        return borrowRule;
+    }
+
+    public void setBorrowRule(BorrowRule borrowRule) {
+        this.borrowRule = borrowRule;
+    }
+
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+//    @OneToMany
+//    private List<BookAuthor> bookAuthors;
 
     public long getId() {
         return id;
@@ -38,4 +65,20 @@ public class Book {
     public void setISBNNumber(String iSBNNumber) {
         this.iSBNNumber = iSBNNumber;
     }
+
+    public String getiSBNNumber() {
+        return iSBNNumber;
+    }
+
+    public void setiSBNNumber(String iSBNNumber) {
+        this.iSBNNumber = iSBNNumber;
+    }
+
+//    public Set<BookCopy> getBookCopies() {
+//        return bookCopies;
+//    }
+//
+//    public void setBookCopies(Set<BookCopy> bookCopies) {
+//        this.bookCopies = bookCopies;
+//    }
 }

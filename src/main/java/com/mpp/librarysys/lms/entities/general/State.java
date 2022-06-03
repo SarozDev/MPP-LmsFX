@@ -1,16 +1,17 @@
-package com.mpp.librarysys.lms.entities;
+package com.mpp.librarysys.lms.entities.general;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
-public class City {
+public class State {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String name;
+//    @OneToMany
+//    private List<City> cities;
 
     public long getId() {
         return id;
@@ -27,4 +28,12 @@ public class City {
     public void setName(String name) {
         this.name = name;
     }
+
+//    public List<City> getCities() {
+//        return cities;
+//    }
+//
+//    public void setCities(List<City> cities) {
+//        this.cities = cities;
+//    }
 }
