@@ -1,19 +1,18 @@
 package com.mpp.librarysys.javafx.controllers;
 
-import com.mpp.librarysys.javafx.constants.FxmlEnums;
 import com.mpp.librarysys.javafx.controllers.component.TableFxComponent;
 import com.mpp.librarysys.javafx.helper.AppAbstractFxController;
-import com.mpp.librarysys.javafx.helper.NavigationManager;
 import com.mpp.librarysys.lms.entities.Book;
-import javafx.collections.FXCollections;
+import com.mpp.librarysys.lms.entities.User;
+import com.mpp.librarysys.lms.services.BookService;
+import com.mpp.librarysys.lms.services.UserService;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.TabPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -23,48 +22,90 @@ import java.util.List;
 public class AdminFxController extends AppAbstractFxController {
 
     @Autowired
-    private ApplicationContext applicationContext;
+    private BookService bookService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private TableFxComponent tableFxComponent;
 
+    // Add book: addBookController and Add User/Member: addMemberController
     @Autowired
-    private GenericAdminController genericAdminController;
+    private AddBookController addBookController;
+    @Autowired
+    private AddMemberController addMemberController;
+
+
+    // ALl the FXML attributes from here
 
     @FXML
-    private VBox rightVBox;
+    private TabPane adminMainTabPane;
 
     @FXML
-    private HBox genericAdminHBoxView;
+    private TabPane bookTabPane;
+
+    @FXML
+    private TabPane membersTabPane;
+
+    @FXML
+    private AnchorPane allMembersAnchorPane;
+
 
     @FXML
     public void initialize() {
-//        FXMLLoader fxmlLoader = NavigationManager.getFxmlLoader(applicationContext, getStage(), FxmlEnums.FxmlContainer.TABLE_COMPONENT);
-//        TableFxComponent tableFxComponent = fxmlLoader.<TableFxComponent>getController();
     }
 
-    public void populateNewData() {
+    public void showNow() {
         tableFxComponent.setStage(getStage());
 
-        System.out.println(getStage().getProperties().get("Test"));
-        List<String> columnList = Arrays.asList("id", "title", "iSBNNumber");
-        ObservableList<Book> books = getBooks();
+//        System.out.println(getStage().getProperties().get("Test"));
 
-        Tab tab = genericAdminController.getTab();
-        tab.setContent(tableFxComponent.createTableView(books, columnList));
+        // add elements
+        populateMemberTabs();
+        populateBookTabs();
+
     }
 
-    private ObservableList<Book> getBooks() {
-        ObservableList<Book> bookEntities = FXCollections.observableArrayList();
-        Book book = new Book();
-        book.setTitle("Java");
-        book.setId(1);
-        Book book1 = new Book();
-        book1.setTitle("Spring");
-        book1.setId(2);
-        bookEntities.add(book);
-        bookEntities.add(book1);
-        return bookEntities;
+    private void populateMemberTabs() {
+        membersTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+
+        // Tab 1: User List view
+        List<String> columnList = Arrays.asList("id", "userName", "firstName");
+        ObservableList<User> userObs = userService.<User>getUserObs();
+        VBox usersTableView = tableFxComponent.createTableView(userObs, columnList);
+
+        Tab allMembersTab = membersTabPane.getTabs().get(0);
+        allMembersTab.setContent(usersTableView);
+
+        // Tab 2: User Add view
+        Tab addMemberTab = membersTabPane.getTabs().get(1);
+
+        VBox userForm = addMemberController.userFormVBox;
+        addMemberTab.setContent(userForm);
+
+    }
+
+    private void populateBookTabs() {
+
+        bookTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+
+        // Tab 1: User List view
+        // Tab 1: Books List view
+        List<String> columnList = Arrays.asList("id", "title", "iSBNNumber");
+        ObservableList<Book> books = bookService.getBooksObs();
+        VBox booksTableView = tableFxComponent.createTableView(books, columnList);
+
+        Tab allBooksTab = bookTabPane.getTabs().get(0);
+        allBooksTab.setContent(booksTableView);
+
+        // Tab 2: User Add view
+        Tab addBookTab = bookTabPane.getTabs().get(1);
+
+        VBox bookFormVBox = addBookController.bookFormVBox;
+        addBookTab.setContent(bookFormVBox);
+
+
     }
 
 }

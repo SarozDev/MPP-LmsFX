@@ -1,13 +1,17 @@
 package com.mpp.librarysys.lms.services;
 
 import com.mpp.librarysys.lms.entities.User;
+import com.mpp.librarysys.lms.entities.enums.RoleEnum;
 import com.mpp.librarysys.lms.repository.AddressRepository;
 import com.mpp.librarysys.lms.repository.UserRepository;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -19,7 +23,7 @@ public class UserService {
     private AddressRepository addressRepository;
 
     public User addNewUser(User reqUser) {
-        if(!ObjectUtils.isEmpty(reqUser.getRoles())) {
+        if (!ObjectUtils.isEmpty(reqUser.getRoles())) {
 
         }
         User savedUser = userRepository.saveAndFlush(reqUser);
@@ -36,4 +40,29 @@ public class UserService {
         }
         return null;
     }
+
+    public <T> ObservableList<T> getUserObs() {
+        ObservableList<User> userEntities = FXCollections.observableArrayList();
+
+        User user = new User();
+        user.setUserName("Admin");
+        user.setRoles(Set.of(RoleEnum.ADMIN));
+        user.setEnabled(true);
+
+        User user1 = new User();
+        user1.setUserName("Shrawan");
+        user1.setRoles(Set.of(RoleEnum.LIBRARIAN));
+        user1.setEnabled(true);
+
+        User user2 = new User();
+        user2.setUserName("Saroj");
+        user2.setRoles(Set.of(RoleEnum.LIBRARIAN));
+        user2.setEnabled(true);
+
+        userEntities.add(user);
+        userEntities.add(user1);
+        userEntities.add(user2);
+        return (ObservableList<T>) userEntities;
+    }
+
 }

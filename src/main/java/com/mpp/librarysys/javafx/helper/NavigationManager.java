@@ -41,7 +41,7 @@ public final class NavigationManager {
         FXMLLoader loader = NavigationManager.getFxmlLoader(applicationContext, currStage, fxmlView);
 
         Parent rootNode = loader.getRoot();
-        Scene scene = new Scene(rootNode, 600, 600);
+        Scene scene = new Scene(rootNode, 640, 680);
         currStage.setScene(scene);
         currStage.show();
         return (T) loader.getController();

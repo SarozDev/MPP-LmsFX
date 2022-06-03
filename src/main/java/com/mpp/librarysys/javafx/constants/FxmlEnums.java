@@ -6,7 +6,11 @@ public final class FxmlEnums {
         LOGIN_VIEW("/fxml/login-view.fxml"),
         ADMIN_DASH_VIEW("/fxml/user/admin-dash-view.fxml"),
 
-        GENERIC_ADMIN_VIEW("/fxml/user/generic-admin-view.fxml");
+        MEMBER_DASH_VIEW("/fxml/user/member-dash-view.fxml"),
+
+        ADD_MEMBER("/fxml/user/add-member.fxml"),
+
+        GENERIC_ADMIN_VIEW("/fxml/user/generic-user-component.fxml");
 
 
         private String value;
