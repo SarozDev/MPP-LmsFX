@@ -33,6 +33,30 @@ public class BookService {
         return bookCopy;
     }
 
+
+
+    public <T> ObservableList<T> getAllBooksByBookName(String bookName) {
+        ObservableList<Book> bookEntities = FXCollections.observableArrayList();
+        Book book = new Book();
+        book.setTitle("Java");
+        book.setId(1);
+        bookEntities.add(book);
+        return (ObservableList<T>) bookEntities;
+    }
+
+    public <T> ObservableList<T> getAllBookCopiesForSelectedBook(String bookName) {
+        ObservableList<BookCopy> bookEntities = FXCollections.observableArrayList();
+        BookCopy book = new BookCopy();
+        book.setCopyNumber("4");
+        book.setId(1);
+
+        BookCopy book1 = new BookCopy();
+        book.setCopyNumber("2");
+        book.setId(2);
+        bookEntities.add(book);
+        return (ObservableList<T>) bookEntities;
+    }
+
     public <T> ObservableList<T> getBooksObs() {
         ObservableList<Book> bookEntities = FXCollections.observableArrayList();
         Book book = new Book();
