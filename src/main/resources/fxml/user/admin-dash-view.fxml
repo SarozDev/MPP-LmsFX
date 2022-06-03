@@ -6,14 +6,13 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mpp.librarysys.javafx.controllers.AdminFxController">
    <children>
-      <VBox prefHeight="400.0" prefWidth="189.0">
-         <children>
-            <HBox alignment="TOP_CENTER" prefHeight="322.0" prefWidth="139.0" />
-            <HBox prefHeight="141.0" prefWidth="139.0" />
-         </children></VBox>
-      <VBox fx:id="rightVBox" prefHeight="360.0" prefWidth="472.0" HBox.hgrow="ALWAYS">
+      <VBox fx:id="rightVBox" alignment="TOP_CENTER" prefHeight="360.0" prefWidth="472.0" HBox.hgrow="ALWAYS">
          <HBox.margin>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </HBox.margin></VBox>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </HBox.margin>
+         <children>
+            <HBox prefHeight="41.0" prefWidth="590.0" />
+            <HBox fx:id="genericAdminHBoxView" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+         </children></VBox>
    </children>
 </HBox>

@@ -4,7 +4,10 @@ public final class FxmlEnums {
 
     public enum FxmlView {
         LOGIN_VIEW("/fxml/login-view.fxml"),
-        ADMIN_DASH_VIEW("/fxml/user/admin-dash-view.fxml");
+        ADMIN_DASH_VIEW("/fxml/user/admin-dash-view.fxml"),
+
+        GENERIC_ADMIN_VIEW("/fxml/user/generic-admin-view.fxml");
+
 
         private String value;
 
