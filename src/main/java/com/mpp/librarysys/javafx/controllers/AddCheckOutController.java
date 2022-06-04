@@ -1,13 +1,13 @@
 package com.mpp.librarysys.javafx.controllers;
 
-import com.mpp.librarysys.javafx.controllers.component.TableFxComponent;
 import com.mpp.librarysys.javafx.helper.AppGeneralObjectConverter;
-import com.mpp.librarysys.lms.entities.Book;
+import com.mpp.librarysys.javafx.util.AppFxUtil;
 import com.mpp.librarysys.lms.entities.BookCopy;
 import com.mpp.librarysys.lms.entities.CheckOutRecordBook;
 import com.mpp.librarysys.lms.entities.LibraryMember;
 import com.mpp.librarysys.lms.services.BookService;
 import com.mpp.librarysys.lms.services.CheckoutService;
+import com.mpp.librarysys.lms.services.UserService;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -15,17 +15,21 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
+import java.time.LocalDate;
+import java.util.Optional;
 
 @Component
 public class AddCheckOutController {
 
+
+    @Autowired
+    private UserService userService;
     @Autowired
     private BookService bookService;
     @Autowired
     private CheckoutService checkoutService;
-
-    @Autowired
-    private TableFxComponent tableFxComponent;
 
     @FXML
     private TabPane tabViewCheckOut;
@@ -35,27 +39,29 @@ public class AddCheckOutController {
 
     @FXML
     public VBox userFormVBox;
-    @FXML
-    public TextField bookField;
-    @FXML
-    public ComboBox<Book> comboBook;
-    @FXML
-    public ComboBox<BookCopy> comboBookCopy;
-    @FXML
-    public ComboBox<LibraryMember> libMemberField;
-    @FXML
-    public DatePicker checkOutDateField;
 
     @FXML
-    public DatePicker dueDateField;
+    private TextField memberIdField;
+    @FXML
+    private TextField isbnNumberField;
 
     @FXML
-    public Button btnSearch;
+    private Label labelMsgBox;
     @FXML
-    public Button btnSave;
+    private ComboBox<BookCopy> comboBookCopy;
 
     @FXML
-    public Button btnCancel;
+    private DatePicker dueDateField;
+
+    @FXML
+    private Button btnSearch;
+    @FXML
+    private Button btnSave;
+
+    @FXML
+    private Button btnReset;
+
+    private CheckOutRecordBook checkOutRecordBook = new CheckOutRecordBook();
 
 
     public void initialize() {
@@ -72,34 +78,66 @@ public class AddCheckOutController {
             }
         });
 
-        this.comboBook.valueProperty().addListener((observableValue, book, t1) -> {
-            populateBookCopiesBasedOnBook();
+        this.btnReset.setOnAction(actionEvent -> {
+            clearForm();
         });
-    }
 
+//        this.comboBook.valueProperty().addListener((observableValue, book, t1) -> {
+//            populateBookCopiesBasedOnBook();
+//        });
+    }
 
 
     private void onSearchClicked() {
-        ObservableList<Book> booksList = bookService.getAllBooksByBookName("Java");
-        comboBook.setItems(booksList);
-        comboBook.setConverter(AppGeneralObjectConverter.getBookObjStringConverter());
+        String memberID = memberIdField.getText();
+        String isbn = isbnNumberField.getText();
+        if (StringUtils.hasText(memberID) && !AppFxUtil.isLong(memberID)) {
+            Alert alert = AppFxUtil.createAlert(Alert.AlertType.WARNING, "Oops !!!", "Member ID must be numeric", "");
+            alert.showAndWait();
+            return;
+        }
+        if (!StringUtils.hasText(memberID) || !StringUtils.hasText(isbn)) {
+            Alert alert = AppFxUtil.createAlert(Alert.AlertType.WARNING, "Oops !!!", "You must provide both fields", "");
+            alert.showAndWait();
+            return;
+        }
+        Optional<LibraryMember> libraryMember = userService.findLibraryMemberByID(Long.parseLong(memberID));
+        if (!libraryMember.isPresent()) {
+            labelMsgBox.setText("Sorry, Member not found !!!");
+            return;
+        }
+        ObservableList<BookCopy> bookCopiesByIsbn = bookService.getAllAvailableBookCopiesByIsbn(isbn);
+        if (bookCopiesByIsbn.size() <= 0) {
+            labelMsgBox.setText("Sorry, No any available book copies !!!");
+            return;
+        } else {
+            labelMsgBox.setText("Success, Please select book copy  !!!");
+        }
+        checkOutRecordBook.setLibraryMember(libraryMember.get());
+        comboBookCopy.setItems(bookCopiesByIsbn);
+        comboBookCopy.setConverter(AppGeneralObjectConverter.getBookCopyObjStringConverter());
     }
 
     private void saveCheckOutRecordBook() {
-        CheckOutRecordBook checkOutRecordBook = new CheckOutRecordBook();
 
         checkOutRecordBook.setBookCopy(comboBookCopy.getValue());
-        checkOutRecordBook.setCheckOutDate(checkOutDateField.getValue());
         checkOutRecordBook.setDueDate(dueDateField.getValue());
-        checkoutService.addNewCheckOutRecordBook(checkOutRecordBook);
+        CheckOutRecordBook savedCheckOutRecordBook = checkoutService.addNewCheckOutRecordBook(checkOutRecordBook);
+        if (null != savedCheckOutRecordBook) {
+            Alert alert = AppFxUtil.createAlert(Alert.AlertType.INFORMATION, "Success", "CheckOutRecord Saved Successfully", "");
+            alert.showAndWait();
+            clearForm();
+        }
 
     }
 
-    private void populateBookCopiesBasedOnBook() {
-        Book selectedBook = comboBook.getSelectionModel().getSelectedItem();
-        ObservableList<BookCopy> copies = bookService.getAllBookCopiesForSelectedBook(selectedBook);
-        comboBookCopy.setItems(copies);
-        comboBookCopy.setConverter(AppGeneralObjectConverter.getBookCopyObjStringConverter());
+    private void clearForm() {
+        checkOutRecordBook = new CheckOutRecordBook();
+        memberIdField.clear();
+        isbnNumberField.clear();
+        labelMsgBox.setText("");
+        dueDateField.setValue(LocalDate.now());
+        comboBookCopy.getItems().clear();
     }
 
 

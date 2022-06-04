@@ -37,11 +37,16 @@ public class BookService {
         authorRepository.save(author);
         return author;
     }
+
     public BookCopy addNewBookCopy(BookCopy bookCopy) {
         bookCopyRepository.save(bookCopy);
         return bookCopy;
     }
 
+    public <T> ObservableList<T> getAllAvailableBookCopiesByIsbn(String isbn) {
+        List<BookCopy> bookCopies = bookCopyRepository.getAllBookCopyByAvailabilityAndBookISBNNumber(isbn);
+        return (ObservableList<T>) FXCollections.observableList(bookCopies);
+    }
 
     public <T> ObservableList<T> getAllBooksByBookName(String bookName) {
         List<Book> books = bookRepository.findByTitleLike(bookName);

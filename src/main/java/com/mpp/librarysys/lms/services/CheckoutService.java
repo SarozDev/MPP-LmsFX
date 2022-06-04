@@ -1,12 +1,10 @@
 package com.mpp.librarysys.lms.services;
 
 import com.mpp.librarysys.lms.entities.Book;
+import com.mpp.librarysys.lms.entities.BookCopy;
 import com.mpp.librarysys.lms.entities.CheckOutRecordBook;
-import com.mpp.librarysys.lms.entities.LibraryMember;
 import com.mpp.librarysys.lms.entities.User;
-import com.mpp.librarysys.lms.repository.BookRepository;
-import com.mpp.librarysys.lms.repository.CheckOutRecordBookRepository;
-import com.mpp.librarysys.lms.repository.LibraryMemberRepository;
+import com.mpp.librarysys.lms.repository.*;
 import com.mpp.librarysys.lms.util.AppUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,8 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CheckoutService {
@@ -28,12 +26,24 @@ public class CheckoutService {
     private LibraryMemberRepository libraryMemberRepository;
 
     @Autowired
+    private BookCopyRepository bookCopyRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private BookRepository bookRepository;
 
     public CheckOutRecordBook addNewCheckOutRecordBook(CheckOutRecordBook checkOutRecordBook) {
+        checkOutRecordBook.setCheckOutDate(LocalDate.now());
         User authenticatedUser = AppUtil.getAuthenticatedUser();
-        LibraryMember libraryMember = libraryMemberRepository.getLibraryMemberByUserId(authenticatedUser.getId());
-        checkOutRecordBook.setLibraryMember(libraryMember);
+        Optional<User> optionalUser = userRepository.findById(authenticatedUser.getId());
+        checkOutRecordBook.setLibrarianUser(optionalUser.get());
+
+        Optional<BookCopy> bookCopyOptional = bookCopyRepository.findById(checkOutRecordBook.getBookCopy().getId());
+        BookCopy bookCopy = bookCopyOptional.get();
+        bookCopy.setAvailable(false);
+        bookCopyRepository.save(bookCopy);
         checkOutRecordBookRepository.save(checkOutRecordBook);
         return checkOutRecordBook;
     }

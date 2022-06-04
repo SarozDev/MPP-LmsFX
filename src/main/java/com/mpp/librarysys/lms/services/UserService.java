@@ -26,6 +26,10 @@ public class UserService {
     @Autowired
     private LibraryMemberRepository libraryMemberRepository;
 
+    public Optional<LibraryMember> findLibraryMemberByID(long libraryMemberId) {
+        return libraryMemberRepository.findById(libraryMemberId);
+    }
+
     public Optional<User> findByUserName(String username) {
         return userRepository.findByUserName(username);
     }
