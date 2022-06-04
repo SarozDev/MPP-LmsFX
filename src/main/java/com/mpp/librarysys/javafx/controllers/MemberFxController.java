@@ -106,7 +106,7 @@ public class MemberFxController extends AppAbstractFxController {
             checkOutHistoryDTO.setDueDate(checkOutRecordBook.getDueDate());
             checkOutHistoryDTO.setBookCopyNumber(bookCopy.getCopyNumber());
             checkOutHistoryDTO.setBookName(book.getTitle());
-            checkOutHistoryDTO.setIsbnNumber(book.getISBNNumber());
+            checkOutHistoryDTO.setIsbnNumber(book.getIsbnNumber());
             checkOutHistoryDTO.setMemberId(String.valueOf(libraryMember.getId()));
             String memberFullName = libraryMember.getUser().getFirstName() + " " + libraryMember.getUser().getLastName();
             checkOutHistoryDTO.setMemberName(memberFullName);

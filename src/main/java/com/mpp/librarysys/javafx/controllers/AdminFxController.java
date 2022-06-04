@@ -124,7 +124,7 @@ public class AdminFxController extends AppAbstractFxController {
         bookTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         // Tab 1: Books List view
-        List<String> columnList = Arrays.asList("id", "title", "iSBNNumber");
+        List<String> columnList = Arrays.asList("id", "title", "isbnNumber");
         ObservableList<Book> books = bookService.getBooksObs();
 
         TableFxComponent tableFxComponent = applicationContext.getBean(TableFxComponent.class);

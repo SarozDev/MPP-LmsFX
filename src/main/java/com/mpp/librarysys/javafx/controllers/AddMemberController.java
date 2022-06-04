@@ -71,18 +71,7 @@ public class AddMemberController extends AppAbstractFxController {
     }
 
     private void onMemberSaveClick() {
-        HashMap<String, Pair<String, String>> hashMap = new LinkedHashMap<>() {{
-            put("Name", new Pair<>(userNameField.getText(), "Username can't be empty"));
-            put("Password", new Pair<>(passwordField.getText(), "Password can't be empty"));
-            put("FirstName", new Pair<>(firstNameField.getText(), "First Name can't be empty"));
-            put("LastName", new Pair<>(lastNameField.getText(), "Last Name can't be empty"));
-            put("Street", new Pair<>(streetField.getText(), "Street can't be empty"));
-            put("City", new Pair<>(cityField.getText(), "City can't be empty"));
-            put("State", new Pair<>(cityField.getText(), "State can't be empty"));
-            put("Zip", new Pair<>(zipField.getText(), "Zip can't be empty"));
-        }};
-        boolean ifAnyFieldIsEmpty = AppFxUtil.showAlertIfAnyFieldIsEmpty(hashMap);
-        if (ifAnyFieldIsEmpty) {
+        if (!validateMemberFormFields()) {
             return;
         }
 
@@ -111,8 +100,26 @@ public class AddMemberController extends AppAbstractFxController {
         user.setEnabled(true);
         user.setContact(contactField.getText());
         User userSaved = userService.addNewUser(user);
-        clearForm();
         showUserSavedSuccessAlert(userSaved);
+        clearForm();
+    }
+
+    private boolean validateMemberFormFields() {
+        HashMap<String, Pair<String, String>> hashMap = new LinkedHashMap<>() {{
+            put("Name", new Pair<>(userNameField.getText(), "Username can't be empty"));
+            put("Password", new Pair<>(passwordField.getText(), "Password can't be empty"));
+            put("FirstName", new Pair<>(firstNameField.getText(), "First Name can't be empty"));
+            put("LastName", new Pair<>(lastNameField.getText(), "Last Name can't be empty"));
+            put("Street", new Pair<>(streetField.getText(), "Street can't be empty"));
+            put("City", new Pair<>(cityField.getText(), "City can't be empty"));
+            put("State", new Pair<>(cityField.getText(), "State can't be empty"));
+            put("Zip", new Pair<>(zipField.getText(), "Zip can't be empty"));
+        }};
+        boolean ifAnyFieldIsEmpty = AppFxUtil.showAlertIfAnyFieldIsEmpty(hashMap);
+        if (ifAnyFieldIsEmpty) {
+            return false;
+        }
+        return true;
     }
 
 

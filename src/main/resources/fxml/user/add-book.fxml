@@ -11,18 +11,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="bookFormVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mpp.librarysys.javafx.controllers.AddBookController">
+<VBox fx:id="bookFormVBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mpp.librarysys.javafx.controllers.AddBookController">
     <children>
-        <HBox prefHeight="50.0" prefWidth="593.0">
+      <Label opacity="0.63" text="Search book Or add new book" />
+        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="593.0">
             <children>
                 <Label text="Book Title">
                     <HBox.margin>
-                        <Insets left="8.0" right="5.0" top="10.0" />
+                        <Insets />
                     </HBox.margin>
                 </Label>
                 <TextField fx:id="titleField" promptText="Enter Book Title">
                     <HBox.margin>
-                        <Insets top="6.0" />
+                        <Insets left="10.0" />
                     </HBox.margin>
                 </TextField>
                 <Label text="Book ISBN">
@@ -30,14 +31,19 @@
                         <Insets bottom="2.0" left="9.0" right="4.0" top="2.0" />
                     </padding>
                     <HBox.margin>
-                        <Insets left="35.0" right="5.0" top="8.0" />
+                        <Insets left="5.0" right="5.0" />
                     </HBox.margin>
                 </Label>
                 <TextField fx:id="isbnField" promptText="Enter Book ISBN">
                     <HBox.margin>
-                        <Insets top="8.0" />
+                        <Insets />
                     </HBox.margin>
                 </TextField>
+            <Button fx:id="btnSearchBook" mnemonicParsing="false" text="Search">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </Button>
             </children>
         </HBox>
       <Separator prefWidth="200.0" />

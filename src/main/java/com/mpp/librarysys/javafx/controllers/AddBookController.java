@@ -18,6 +18,7 @@ import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -40,6 +41,9 @@ public class AddBookController extends AppAbstractFxController {
     private TextField titleField;
     @FXML
     private TextField isbnField;
+
+    @FXML
+    private Button btnSearchBook;
 
     @FXML
     public ComboBox<Author> comboAuthorBox;
@@ -90,7 +94,27 @@ public class AddBookController extends AppAbstractFxController {
             this.onBookSaveClicked();
         });
 
+        // for book update
+        btnSearchBook.setOnAction(actionEvent -> {
+            this.searchBookAndPopulateFields();
+        });
 
+
+    }
+
+    private void searchBookAndPopulateFields() {
+        // validate isbnField
+        if (!StringUtils.hasText(isbnField.getText())) {
+            Alert alert = AppFxUtil.createAlert(Alert.AlertType.WARNING, "Oops !!!", "Please provide ISBN to search", "");
+            alert.showAndWait();
+            return;
+        }
+        Book bookByIsbn = bookService.getBookByIsbn(isbnField.getText());
+        ObservableList<BookCopy> bookCopiesForSelectedBook = bookService.getAllBookCopiesForSelectedBook(bookByIsbn);
+        obsBookCopyList.setAll(bookCopiesForSelectedBook);
+        book = bookByIsbn;
+        titleField.setText(book.getTitle());
+        comboAuthorBox.getSelectionModel().select(bookByIsbn.getAuthor());
     }
 
     private void constructBookCopyTableViewComponent() {
@@ -109,8 +133,8 @@ public class AddBookController extends AppAbstractFxController {
         HashMap<String, Pair<String, String>> hashMap = new LinkedHashMap<>() {{
             put("titleField", new Pair<>(titleField.getText(), "Book title can't be empty"));
             put("isbnField", new Pair<>(isbnField.getText(), "Book ISBN can't be empty"));
-            put("author", new Pair<>(null == selectedAuthor ? null: "ok", "Author should be added or selected"));
-            put("bookCopy", new Pair<>(bookCopySet.size() <=0 ? null: "ok", "At least 1 book copy is required"));
+            put("author", new Pair<>(null == selectedAuthor ? null : "ok", "Author should be added or selected"));
+            put("bookCopy", new Pair<>(bookCopySet.size() <= 0 ? null : "ok", "At least 1 book copy is required"));
 
         }};
         boolean ifAnyFieldIsEmpty = AppFxUtil.showAlertIfAnyFieldIsEmpty(hashMap);
@@ -119,7 +143,7 @@ public class AddBookController extends AppAbstractFxController {
         }
 
         book.setTitle(titleField.getText());
-        book.setISBNNumber(isbnField.getText());
+        book.setIsbnNumber(isbnField.getText());
         book.setAuthor(selectedAuthor);
         book.setBorrowRule(null);
 
@@ -178,6 +202,7 @@ public class AddBookController extends AppAbstractFxController {
         authorName.clear();
         authorBio.clear();
     }
+
     private void clearBookCopyForm() {
         bookCopyNumField.clear();
         bookCopyIsAvailable.setSelected(true);

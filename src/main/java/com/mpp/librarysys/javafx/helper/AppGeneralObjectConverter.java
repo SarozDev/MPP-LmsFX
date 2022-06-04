@@ -14,7 +14,7 @@ public class AppGeneralObjectConverter {
             @Override
             public String toString(Book book) {
                 if(null == book) return "Select item";
-                return book.getId() + ": " + book.getTitle() + ": " + book.getISBNNumber();
+                return book.getId() + ": " + book.getTitle() + ": " + book.getIsbnNumber();
             }
 
             @Override

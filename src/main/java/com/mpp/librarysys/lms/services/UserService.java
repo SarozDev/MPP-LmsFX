@@ -37,14 +37,17 @@ public class UserService {
 
     public User addNewUser(User reqUser) {
         User savedUser = userRepository.save(reqUser);
+        checkAndSaveLibraryMember(reqUser, savedUser);
+        return savedUser;
+    }
 
+    private void checkAndSaveLibraryMember(User reqUser, User savedUser) {
         // if role is empty, then he/she is library member
         if (ObjectUtils.isEmpty(reqUser.getRoles())) {
             LibraryMember libraryMember = new LibraryMember();
             libraryMember.setUser(savedUser);
             libraryMemberRepository.save(libraryMember);
         }
-        return savedUser;
     }
 
     public User updateUser(User reqUser) {

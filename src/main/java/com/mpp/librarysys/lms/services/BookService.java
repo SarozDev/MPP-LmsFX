@@ -43,6 +43,11 @@ public class BookService {
         return bookCopy;
     }
 
+    public Book getBookByIsbn(String isbn) {
+        Book book = bookRepository.findByISBNNumber(isbn);
+        return book;
+    }
+
     public <T> ObservableList<T> getAllAvailableBookCopiesByIsbn(String isbn) {
         List<BookCopy> bookCopies = bookCopyRepository.getAllBookCopyByAvailabilityAndBookISBNNumber(isbn);
         return (ObservableList<T>) FXCollections.observableList(bookCopies);

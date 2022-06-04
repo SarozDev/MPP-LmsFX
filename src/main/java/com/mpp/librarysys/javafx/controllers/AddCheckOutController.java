@@ -92,16 +92,8 @@ public class AddCheckOutController {
     private void onSearchClicked() {
         String memberID = memberIdField.getText();
         String isbn = isbnNumberField.getText();
-        if (StringUtils.hasText(memberID) && !AppFxUtil.isLong(memberID)) {
-            Alert alert = AppFxUtil.createAlert(Alert.AlertType.WARNING, "Oops !!!", "Member ID must be numeric", "");
-            alert.showAndWait();
-            return;
-        }
-        if (!StringUtils.hasText(memberID) || !StringUtils.hasText(isbn)) {
-            Alert alert = AppFxUtil.createAlert(Alert.AlertType.WARNING, "Oops !!!", "Please must provide both fields", "");
-            alert.showAndWait();
-            return;
-        }
+
+        validateLoginInputFields(memberID, isbn);
         Optional<LibraryMember> libraryMember = userService.findLibraryMemberByID(Long.parseLong(memberID));
         if (!libraryMember.isPresent()) {
             labelMsgBox.setText("Sorry, Member not found !!!");
@@ -115,8 +107,26 @@ public class AddCheckOutController {
             labelMsgBox.setText("Success, Please select book copy to proceed !!!");
         }
         checkOutRecordBook.setLibraryMember(libraryMember.get());
+        populateBookCopies(bookCopiesByIsbn);
+    }
+
+    private void populateBookCopies(ObservableList<BookCopy> bookCopiesByIsbn) {
+        // populate book copies
         comboBookCopy.setItems(bookCopiesByIsbn);
         comboBookCopy.setConverter(AppGeneralObjectConverter.getBookCopyObjStringConverter());
+    }
+
+    private void validateLoginInputFields(String memberID, String isbn) {
+        if (StringUtils.hasText(memberID) && !AppFxUtil.isLong(memberID)) {
+            Alert alert = AppFxUtil.createAlert(Alert.AlertType.WARNING, "Oops !!!", "Member ID must be numeric", "");
+            alert.showAndWait();
+            return;
+        }
+        if (!StringUtils.hasText(memberID) || !StringUtils.hasText(isbn)) {
+            Alert alert = AppFxUtil.createAlert(Alert.AlertType.WARNING, "Oops !!!", "Please provide both fields", "");
+            alert.showAndWait();
+            return;
+        }
     }
 
     private void saveCheckOutRecordBook() {

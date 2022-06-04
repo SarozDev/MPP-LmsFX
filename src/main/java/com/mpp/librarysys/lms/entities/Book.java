@@ -1,7 +1,6 @@
 package com.mpp.librarysys.lms.entities;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 public class Book {
@@ -9,7 +8,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String title;
-    private String iSBNNumber;
+    private String isbnNumber;
 
     @ManyToOne
     @JoinColumn(name = "author_id")
@@ -23,24 +22,7 @@ public class Book {
     @JoinColumn(name = "borrow_rule_id")
     private BorrowRule borrowRule;
 
-    public BorrowRule getBorrowRule() {
-        return borrowRule;
-    }
-
-    public void setBorrowRule(BorrowRule borrowRule) {
-        this.borrowRule = borrowRule;
-    }
-
-
-    public Author getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
-//    @OneToMany
-//    private List<BookAuthor> bookAuthors;
+    private long defaultRentDays;
 
     public long getId() {
         return id;
@@ -58,31 +40,35 @@ public class Book {
         this.title = title;
     }
 
-    public String getISBNNumber() {
-        return iSBNNumber;
+    public String getIsbnNumber() {
+        return isbnNumber;
     }
 
-    public void setISBNNumber(String iSBNNumber) {
-        this.iSBNNumber = iSBNNumber;
+    public void setIsbnNumber(String isbnNumber) {
+        this.isbnNumber = isbnNumber;
     }
 
-//    public Set<BookCopy> getBookCopies() {
-//        return bookCopies;
-//    }
-//
-//    public void setBookCopies(Set<BookCopy> bookCopies) {
-//        this.bookCopies = bookCopies;
-//    }
+    public Author getAuthor() {
+        return author;
+    }
 
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", iSBNNumber='" + iSBNNumber + '\'' +
-                ", author=" + author +
-                ", borrowRule=" + borrowRule +
-                '}';
+    public BorrowRule getBorrowRule() {
+        return borrowRule;
+    }
+
+    public void setBorrowRule(BorrowRule borrowRule) {
+        this.borrowRule = borrowRule;
+    }
+
+    public long getDefaultRentDays() {
+        return defaultRentDays;
+    }
+
+    public void setDefaultRentDays(long defaultRentDays) {
+        this.defaultRentDays = defaultRentDays;
     }
 }

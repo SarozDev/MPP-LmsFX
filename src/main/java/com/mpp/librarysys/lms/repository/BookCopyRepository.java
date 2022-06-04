@@ -13,7 +13,7 @@ public interface BookCopyRepository extends JpaRepository<BookCopy, Long> {
 
     List<BookCopy> findAllByBookId(long bookId);
 
-    @Query("SELECT bc FROM BookCopy bc WHERE bc.book.iSBNNumber = :isbnNumber AND bc.isAvailable = true")
+    @Query("SELECT bc FROM BookCopy bc WHERE bc.book.isbnNumber = :isbnNumber AND bc.isAvailable = true")
     List<BookCopy> getAllBookCopyByAvailabilityAndBookISBNNumber(@Param("isbnNumber") String isbnNumber);
 
 }

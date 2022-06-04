@@ -40,12 +40,18 @@ public class CheckoutService {
         Optional<User> optionalUser = userRepository.findById(authenticatedUser.getId());
         checkOutRecordBook.setLibrarianUser(optionalUser.get());
 
-        Optional<BookCopy> bookCopyOptional = bookCopyRepository.findById(checkOutRecordBook.getBookCopy().getId());
-        BookCopy bookCopy = bookCopyOptional.get();
-        bookCopy.setAvailable(false);
+        BookCopy bookCopy = updateBookAvailability(checkOutRecordBook);
         bookCopyRepository.save(bookCopy);
         checkOutRecordBookRepository.save(checkOutRecordBook);
         return checkOutRecordBook;
+    }
+
+    private BookCopy updateBookAvailability(CheckOutRecordBook checkOutRecordBook) {
+        // set book copy availability to false
+        Optional<BookCopy> bookCopyOptional = bookCopyRepository.findById(checkOutRecordBook.getBookCopy().getId());
+        BookCopy bookCopy = bookCopyOptional.get();
+        bookCopy.setAvailable(false);
+        return bookCopy;
     }
 
     public List<Book> getAllBooks() {

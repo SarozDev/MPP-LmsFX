@@ -66,21 +66,25 @@ public class LoginFxController extends AppAbstractFxController {
             return;
         }
 
+        checkAuthorizationLevel(user);
+
+    }
+
+    private void checkAuthorizationLevel(User user) {
         // authorization level selection
         boolean hasAdminPrivilege = user.getRoles()
                 .stream().anyMatch(roleEnum -> roleEnum.equals(RoleEnum.ADMIN));
         if (user.getRoles().size() > 1) {
-            authorizationLevelSelection();
+            selectAuthorizationLevel();
         } else if (hasAdminPrivilege) {
             navigateToAdminDashboard();
         } else {
             navigateToLibrarianDashboard();
         }
-
     }
 
 
-    private void authorizationLevelSelection() {
+    private void selectAuthorizationLevel() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Action Required");
         alert.setHeaderText("Please choose the authorization level ");
