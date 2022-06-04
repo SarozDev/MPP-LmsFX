@@ -11,6 +11,8 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    private String authorName;
     private String shortBio;
 
 //    private List<Book> booksList;
@@ -22,6 +24,14 @@ public class Author {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
     public String getShortBio() {

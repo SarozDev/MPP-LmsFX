@@ -73,4 +73,16 @@ public class Book {
 //    public void setBookCopies(Set<BookCopy> bookCopies) {
 //        this.bookCopies = bookCopies;
 //    }
+
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", iSBNNumber='" + iSBNNumber + '\'' +
+                ", author=" + author +
+                ", borrowRule=" + borrowRule +
+                '}';
+    }
 }

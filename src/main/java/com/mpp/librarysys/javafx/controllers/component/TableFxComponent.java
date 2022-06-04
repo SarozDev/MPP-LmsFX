@@ -1,33 +1,19 @@
 package com.mpp.librarysys.javafx.controllers.component;
 
-import com.mpp.librarysys.javafx.helper.AppAbstractFxController;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public class TableFxComponent extends AppAbstractFxController {
+@Scope("prototype")
+public class TableFxComponent {
 
     private TableView tableView;
-
-    @FXML
-    public void initialize() {
-    }
-
-    public VBox createTableViewVBox(ObservableList<?> observableList, List<String> columns) {
-
-        TableView tableView = new TableView();
-        showScreen(tableView, observableList, columns);
-        VBox vBox = new VBox(tableView);
-        this.tableView = tableView;
-        return vBox;
-    }
 
     public void showScreen(TableView tableView, ObservableList<?> obsDataList, List<String> columns) {
         tableView.setItems(obsDataList);
@@ -41,7 +27,7 @@ public class TableFxComponent extends AppAbstractFxController {
     }
 
     public TableView getTableView() {
-        if(null == this.tableView) {
+        if (null == this.tableView) {
             this.tableView = new TableView();
         }
         return tableView;

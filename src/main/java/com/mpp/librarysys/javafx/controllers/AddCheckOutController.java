@@ -16,9 +16,6 @@ import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Component
 public class AddCheckOutController {
 
@@ -29,9 +26,6 @@ public class AddCheckOutController {
 
     @Autowired
     private TableFxComponent tableFxComponent;
-
-    @Autowired
-    private AppGeneralObjectConverter appGeneralObjectConverter;
 
     @FXML
     private TabPane tabViewCheckOut;
@@ -88,7 +82,7 @@ public class AddCheckOutController {
     private void onSearchClicked() {
         ObservableList<Book> booksList = bookService.getAllBooksByBookName("Java");
         comboBook.setItems(booksList);
-        comboBook.setConverter(appGeneralObjectConverter.getBookObjStringConverter());
+        comboBook.setConverter(AppGeneralObjectConverter.getBookObjStringConverter());
     }
 
     private void saveCheckOutRecordBook() {
@@ -105,7 +99,7 @@ public class AddCheckOutController {
         Book selectedBook = comboBook.getSelectionModel().getSelectedItem();
         ObservableList<BookCopy> copies = bookService.getAllBookCopiesForSelectedBook(selectedBook);
         comboBookCopy.setItems(copies);
-        comboBookCopy.setConverter(appGeneralObjectConverter.getBookCopyObjStringConverter());
+        comboBookCopy.setConverter(AppGeneralObjectConverter.getBookCopyObjStringConverter());
     }
 
 

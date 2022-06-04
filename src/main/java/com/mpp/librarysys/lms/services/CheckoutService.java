@@ -12,8 +12,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,7 +38,7 @@ public class CheckoutService {
         return checkOutRecordBook;
     }
 
-    public List<Book> getAllBooks(){
+    public List<Book> getAllBooks() {
         List<Book> bookList = bookRepository.findAll();
         return bookList;
     }
@@ -63,14 +65,16 @@ public class CheckoutService {
         return (ObservableList<T>) userEntities;
     }
 
-    public static <T> ObservableList<T> getMembersById(long id) {
-        ObservableList<CheckOutRecordBook> checkOutRecordBooks = FXCollections.observableArrayList();
-        CheckOutRecordBook checkOutRecordBook = new CheckOutRecordBook();
-
-        checkOutRecordBook.setCheckOutDate(LocalDate.now());
-        checkOutRecordBook.setDueDate(LocalDate.now().plusDays(7));
-        checkOutRecordBooks.add(checkOutRecordBook);
-
+    public <T> ObservableList<T> getCheckoutRecordBookByMembersByIdOrIsbn(long libraryMemberId, String isbnNumber) {
+        List<CheckOutRecordBook> checkOutRecordBookByLibraryMember;
+        if(libraryMemberId > 0 && StringUtils.hasText(isbnNumber)) {
+            checkOutRecordBookByLibraryMember = checkOutRecordBookRepository.getAllCheckOutRecordBookByLibraryMemberIdAndIsbn(libraryMemberId, isbnNumber);
+        } else if(libraryMemberId > 0) {
+            checkOutRecordBookByLibraryMember = checkOutRecordBookRepository.getAllCheckOutRecordBookByLibraryMemberId(libraryMemberId);
+        } else {
+            checkOutRecordBookByLibraryMember = checkOutRecordBookRepository.getAllCheckOutRecordBookByIsbn(isbnNumber);
+        }
+        ObservableList<CheckOutRecordBook> checkOutRecordBooks = FXCollections.observableList(checkOutRecordBookByLibraryMember);
         return (ObservableList<T>) checkOutRecordBooks;
     }
 

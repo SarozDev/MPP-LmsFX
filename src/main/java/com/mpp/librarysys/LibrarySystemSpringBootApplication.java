@@ -23,7 +23,7 @@ public class LibrarySystemSpringBootApplication implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         Optional<User> admin = userService.findByUserName("admin");
         if (!admin.isPresent()) {
             System.out.println("Initial Admin-User Not Found, initializing default admin with username: admin");

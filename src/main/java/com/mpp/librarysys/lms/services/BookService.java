@@ -1,7 +1,9 @@
 package com.mpp.librarysys.lms.services;
 
+import com.mpp.librarysys.lms.entities.Author;
 import com.mpp.librarysys.lms.entities.Book;
 import com.mpp.librarysys.lms.entities.BookCopy;
+import com.mpp.librarysys.lms.repository.AuthorRepository;
 import com.mpp.librarysys.lms.repository.BookCopyRepository;
 import com.mpp.librarysys.lms.repository.BookRepository;
 import javafx.collections.FXCollections;
@@ -19,6 +21,9 @@ public class BookService {
     private BookRepository bookRepository;
 
     @Autowired
+    private AuthorRepository authorRepository;
+
+    @Autowired
     private BookCopyRepository bookCopyRepository;
 
 
@@ -28,47 +33,33 @@ public class BookService {
         return book;
     }
 
+    public Author addNewAuthor(Author author) {
+        authorRepository.save(author);
+        return author;
+    }
     public BookCopy addNewBookCopy(BookCopy bookCopy) {
         bookCopyRepository.save(bookCopy);
         return bookCopy;
     }
 
 
-
     public <T> ObservableList<T> getAllBooksByBookName(String bookName) {
-        ObservableList<Book> bookEntities = FXCollections.observableArrayList();
-        Book book = new Book();
-        book.setTitle("Java");
-        book.setId(1);
-        bookEntities.add(book);
-        return (ObservableList<T>) bookEntities;
+        List<Book> books = bookRepository.findByTitleLike(bookName);
+        return (ObservableList<T>) FXCollections.observableList(books);
     }
 
     public <T> ObservableList<T> getAllBookCopiesForSelectedBook(Book selectedBook) {
-        ObservableList<BookCopy> bookEntities = FXCollections.observableArrayList();
-        BookCopy book = new BookCopy();
-        book.setCopyNumber("4");
-        book.setId(1);
-        book.setBook(selectedBook);
-
-        BookCopy book1 = new BookCopy();
-        book1.setCopyNumber("2");
-        book1.setId(2);
-        book1.setBook(selectedBook);
-        bookEntities.add(book);
-        return (ObservableList<T>) bookEntities;
+        List<BookCopy> bookCopies = bookCopyRepository.findAllByBookId(selectedBook.getId());
+        return (ObservableList<T>) FXCollections.observableList(bookCopies);
     }
 
     public <T> ObservableList<T> getBooksObs() {
-        ObservableList<Book> bookEntities = FXCollections.observableArrayList();
-        Book book = new Book();
-        book.setTitle("Java");
-        book.setId(1);
-        Book book1 = new Book();
-        book1.setTitle("Spring");
-        book1.setId(2);
-        bookEntities.add(book);
-        bookEntities.add(book1);
-        return (ObservableList<T>) bookEntities;
+        List<Book> books = bookRepository.findAll();
+        return (ObservableList<T>) FXCollections.observableList(books);
+    }
+
+    public <T> ObservableList<T> getAllAuthorsObs() {
+        List<Author> authors = authorRepository.findAll();
+        return (ObservableList<T>) FXCollections.observableList(authors);
     }
 }

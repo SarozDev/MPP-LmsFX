@@ -17,8 +17,21 @@ public class CheckOutRecordBook {
     @ManyToOne
     @JoinColumn(name = "library_member_id")
     private LibraryMember libraryMember;
+
+    @ManyToOne
+    @JoinColumn(name = "librarian_user_id")
+    private User librarianUser;
+
     private LocalDate checkOutDate;
     private LocalDate dueDate;
+
+    public User getLibrarianUser() {
+        return librarianUser;
+    }
+
+    public void setLibrarianUser(User librarianUser) {
+        this.librarianUser = librarianUser;
+    }
 
     public BookCopy getBookCopy() {
         return bookCopy;
