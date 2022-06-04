@@ -140,7 +140,8 @@ public class AddCheckOutController {
         checkOutRecordBook.setDueDate(dueDateField.getValue());
         CheckOutRecordBook savedCheckOutRecordBook = checkoutService.addNewCheckOutRecordBook(checkOutRecordBook);
         if (null != savedCheckOutRecordBook) {
-            Alert alert = AppFxUtil.createAlert(Alert.AlertType.INFORMATION, "Success", "CheckOutRecord Saved Successfully", "");
+            String t = "Checkedout book: " + checkOutRecordBook.getId();
+            Alert alert = AppFxUtil.createAlert(Alert.AlertType.INFORMATION, "Success", "CheckOutRecord Saved Successfully", t);
             alert.showAndWait();
             clearForm();
         }

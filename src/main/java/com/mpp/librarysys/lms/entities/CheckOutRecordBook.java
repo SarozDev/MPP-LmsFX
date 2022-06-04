@@ -74,4 +74,15 @@ public class CheckOutRecordBook {
     }
 
 
+    @Override
+    public String toString() {
+        return "CheckOutRecordBook{" +
+                "id=" + id +
+                ", bookCopy=" + bookCopy +
+                ", libraryMember=" + libraryMember +
+                ", librarianUser=" + librarianUser +
+                ", checkOutDate=" + checkOutDate +
+                ", dueDate=" + dueDate +
+                '}';
+    }
 }

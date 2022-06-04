@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mpp.librarysys.javafx.controllers.MemberFxController">
    <children>
       <HBox alignment="CENTER_RIGHT">
@@ -78,7 +77,7 @@
                                     </Button>
                                  </children>
                               </HBox>
-                              <TableView fx:id="tblMemberView" VBox.vgrow="ALWAYS">
+                              <TableView fx:id="tblMemberView" minWidth="800.0" VBox.vgrow="ALWAYS">
                                  <VBox.margin>
                                     <Insets top="20.0" />
                                  </VBox.margin>
