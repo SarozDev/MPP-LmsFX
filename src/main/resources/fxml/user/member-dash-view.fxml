@@ -3,6 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
@@ -12,70 +15,94 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" tabClosingPolicy="UNAVAILABLE" tabMinHeight="30.0" tabMinWidth="50.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mpp.librarysys.javafx.controllers.MemberFxController">
-  <tabs>
-    <Tab fx:id="tabViewCheckOut" text="View CheckOut Record">
-      <content>
-        <AnchorPane>
-               <children>
-                  <VBox layoutX="46.0" layoutY="14.0">
+
+<VBox xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mpp.librarysys.javafx.controllers.MemberFxController">
+   <children>
+      <HBox alignment="CENTER_RIGHT">
+         <children>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="Options">
+                  <items>
+                    <MenuItem fx:id="menuItemLogoutBtn" mnemonicParsing="false" text="Logout" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </HBox>
+      <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" tabClosingPolicy="UNAVAILABLE" tabMinHeight="30.0" tabMinWidth="50.0">
+        <tabs>
+          <Tab fx:id="tabViewCheckOut" text="View CheckOut Record">
+            <content>
+              <AnchorPane>
                      <children>
-                        <HBox VBox.vgrow="ALWAYS">
+                        <VBox layoutX="46.0" layoutY="14.0">
                            <children>
-                              <Label opacity="0.56" text="Search by either member ID or ISBN">
-                                 <font>
-                                    <Font name="Arial Italic" size="11.0" />
-                                 </font>
-                              </Label>
+                              <HBox VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <Label opacity="0.56" text="Search by either member ID or ISBN">
+                                       <font>
+                                          <Font name="Arial Italic" size="11.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <Label alignment="CENTER" text="Member ID" textAlignment="CENTER">
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="10.0" top="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="fieldMemberId" promptText="Enter Member ID">
+                                       <HBox.margin>
+                                          <Insets right="25.0" top="6.0" />
+                                       </HBox.margin>
+                                    </TextField>
+                                    <Label alignment="CENTER" layoutX="15.0" layoutY="20.0" text="ISBN">
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <TextField fx:id="isbnTextField" layoutX="84.0" layoutY="16.0" promptText="Enter ISBN" />
+                                    <Button fx:id="btnMemberSearch" mnemonicParsing="false" text="Search">
+                                       <HBox.margin>
+                                          <Insets left="20.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <TableView fx:id="tblMemberView" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </TableView>
                            </children>
-                        </HBox>
-                        <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
-                           <children>
-                              <Label alignment="CENTER" text="Member ID" textAlignment="CENTER">
-                                 <HBox.margin>
-                                    <Insets left="5.0" right="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <TextField fx:id="fieldMemberId" promptText="Enter Member ID">
-                                 <HBox.margin>
-                                    <Insets right="25.0" top="6.0" />
-                                 </HBox.margin>
-                              </TextField>
-                              <Label alignment="CENTER" layoutX="15.0" layoutY="20.0" text="ISBN">
-                                 <HBox.margin>
-                                    <Insets right="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <TextField fx:id="isbnTextField" layoutX="84.0" layoutY="16.0" promptText="Enter ISBN" />
-                              <Button fx:id="btnMemberSearch" mnemonicParsing="false" text="Search">
-                                 <HBox.margin>
-                                    <Insets left="20.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                        </HBox>
-                        <TableView fx:id="tblMemberView" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets top="20.0" />
-                           </VBox.margin>
-                        </TableView>
+                        </VBox>
                      </children>
-                  </VBox>
-               </children>
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding></AnchorPane>
-      </content>
-    </Tab>
-    <Tab fx:id="tabAddCheckOut" text="Add New CheckOut Record">
-      <content>
-        <AnchorPane>
-          <fx:include fx:id="adCheckout" source="add-checkout.fxml" />
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-        </AnchorPane>
-      </content>
-    </Tab>
-  </tabs>
-</TabPane>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="tabAddCheckOut" text="Add New CheckOut Record">
+            <content>
+              <AnchorPane>
+                <fx:include fx:id="adCheckout" source="add-checkout.fxml" />
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+              </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</VBox>

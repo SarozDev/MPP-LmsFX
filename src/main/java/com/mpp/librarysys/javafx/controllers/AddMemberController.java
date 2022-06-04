@@ -63,7 +63,7 @@ public class AddMemberController extends AppAbstractFxController {
 
     @FXML
     public void initialize() {
-        String roleNoteText = "If no any role is selected, it default to 'library-member' with no login access";
+        String roleNoteText = "If none of the role is selected, it will default to 'library-member' with no login access";
         roleNoteLabel.setText(roleNoteText);
         this.saveButton.setOnAction(actionEvent -> {
             onMemberSaveClick();
@@ -74,8 +74,8 @@ public class AddMemberController extends AppAbstractFxController {
         HashMap<String, Pair<String, String>> hashMap = new LinkedHashMap<>() {{
             put("Name", new Pair<>(userNameField.getText(), "Username can't be empty"));
             put("Password", new Pair<>(passwordField.getText(), "Password can't be empty"));
-            put("FirstName", new Pair<>(streetField.getText(), "First Name can't be empty"));
-            put("LastName", new Pair<>(streetField.getText(), "Last Name can't be empty"));
+            put("FirstName", new Pair<>(firstNameField.getText(), "First Name can't be empty"));
+            put("LastName", new Pair<>(lastNameField.getText(), "Last Name can't be empty"));
             put("Street", new Pair<>(streetField.getText(), "Street can't be empty"));
             put("City", new Pair<>(cityField.getText(), "City can't be empty"));
             put("State", new Pair<>(cityField.getText(), "State can't be empty"));

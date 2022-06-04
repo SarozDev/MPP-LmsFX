@@ -1,7 +1,9 @@
 package com.mpp.librarysys.javafx.controllers;
 
+import com.mpp.librarysys.javafx.constants.FxmlEnums;
 import com.mpp.librarysys.javafx.controllers.component.TableFxComponent;
 import com.mpp.librarysys.javafx.helper.AppAbstractFxController;
+import com.mpp.librarysys.javafx.helper.NavigationManager;
 import com.mpp.librarysys.javafx.util.AppFxUtil;
 import com.mpp.librarysys.javafx.util.CheckOutHistoryDTO;
 import com.mpp.librarysys.lms.entities.Book;
@@ -13,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -32,6 +35,9 @@ public class MemberFxController extends AppAbstractFxController {
 
     @Autowired
     private ApplicationContext applicationContext;
+
+    @FXML
+    private MenuItem menuItemLogoutBtn;
 
     @FXML
     private Tab tabViewCheckOut;
@@ -56,6 +62,12 @@ public class MemberFxController extends AppAbstractFxController {
 
     @FXML
     public void initialize() {
+        menuItemLogoutBtn.setOnAction(actionEvent -> {
+            getStage().close();
+            Stage loginStage = new Stage();
+            loginStage.setTitle("Library Management System");
+            NavigationManager.switchScene(applicationContext, loginStage, FxmlEnums.FxmlView.LOGIN_VIEW);
+        });
         this.btnMemberSearch.setOnAction(actionEvent -> {
             onCheckoutRecordBookHistorySearch();
         });
@@ -99,12 +111,12 @@ public class MemberFxController extends AppAbstractFxController {
             String memberFullName = libraryMember.getUser().getFirstName() + " " + libraryMember.getUser().getLastName();
             checkOutHistoryDTO.setMemberName(memberFullName);
             checkOutHistoryDTO.setLibrarianId(String.valueOf(checkOutRecordBook.getLibrarianUser().getId()));
-            boolean dataHasPassed = checkOutRecordBook.getDueDate().isAfter(LocalDate.now());
+            boolean dataHasPassed = LocalDate.now().isAfter(checkOutRecordBook.getDueDate());
             checkOutHistoryDTO.setDatePassed(dataHasPassed ? "Yes" : "No");
             return checkOutHistoryDTO;
         }).collect(Collectors.toList());
 
-        List<String> columnList = Arrays.asList("id", "bookName", "isbnNumber", "bookCopyNumber", "memberId", "memberName", "datePassed");
+        List<String> columnList = Arrays.asList("id", "bookName", "isbnNumber", "bookCopyNumber", "memberId", "memberName", "dueDate", "datePassed");
         TableFxComponent tableFxComponent = applicationContext.getBean(TableFxComponent.class);
         tableFxComponent.showScreen(tblMemberView, FXCollections.observableList(checkOutHistoryDTOS), columnList);
 

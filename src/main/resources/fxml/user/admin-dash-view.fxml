@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -25,7 +28,7 @@
                                  <children>
                                     <TabPane fx:id="membersTabPane" layoutX="10.0" layoutY="25.0" tabClosingPolicy="UNAVAILABLE" tabMinHeight="30.0" AnchorPane.bottomAnchor="0.6000000000000227" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="25.0">
                                       <tabs>
-                                        <Tab closable="false" text="All Members">
+                                        <Tab fx:id="allMemberTabBtn" closable="false" text="All Members">
                                           <content>
                                             <AnchorPane fx:id="allMembersAnchorPane">
                                                    <padding>
@@ -45,6 +48,20 @@
                                         </Tab>
                                       </tabs>
                                     </TabPane>
+                                    <MenuBar layoutX="502.0" layoutY="1.0">
+                                      <menus>
+                                        <Menu mnemonicParsing="false" text="Options">
+                                          <items>
+                                            <MenuItem fx:id="menuItemLogoutBtn" mnemonicParsing="false" text="Logout" />
+                                          </items>
+                                        </Menu>
+                                        <Menu mnemonicParsing="false" text="Help">
+                                          <items>
+                                            <MenuItem mnemonicParsing="false" text="About" />
+                                          </items>
+                                        </Menu>
+                                      </menus>
+                                    </MenuBar>
                                  </children>
                               </AnchorPane>
                         </content>
@@ -55,7 +72,7 @@
                                  <children>
                                     <TabPane fx:id="bookTabPane" layoutX="10.0" layoutY="25.0" tabClosingPolicy="UNAVAILABLE" tabMinHeight="30.0" AnchorPane.bottomAnchor="0.6000000000000227" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="25.0">
                                        <tabs>
-                                          <Tab text="All Books">
+                                          <Tab fx:id="allBookTabBtn" text="All Books">
                                              <content>
                                                 <AnchorPane>
                                                    <padding>

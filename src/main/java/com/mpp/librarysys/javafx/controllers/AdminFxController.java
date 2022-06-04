@@ -1,18 +1,22 @@
 package com.mpp.librarysys.javafx.controllers;
 
+import com.mpp.librarysys.javafx.constants.FxmlEnums;
 import com.mpp.librarysys.javafx.controllers.component.TableFxComponent;
 import com.mpp.librarysys.javafx.helper.AppAbstractFxController;
+import com.mpp.librarysys.javafx.helper.NavigationManager;
 import com.mpp.librarysys.lms.entities.Book;
 import com.mpp.librarysys.lms.entities.User;
 import com.mpp.librarysys.lms.services.BookService;
 import com.mpp.librarysys.lms.services.UserService;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
@@ -45,6 +49,9 @@ public class AdminFxController extends AppAbstractFxController {
     // ALl the FXML attributes from here
 
     @FXML
+    private MenuItem menuItemLogoutBtn;
+
+    @FXML
     private TabPane adminMainTabPane;
 
     @FXML
@@ -56,14 +63,38 @@ public class AdminFxController extends AppAbstractFxController {
     @FXML
     private AnchorPane allMembersAnchorPane;
 
+    @FXML
+    private Tab allMemberTabBtn;
+
+    @FXML
+    private Tab allBookTabBtn;
+
 
     @FXML
     public void initialize() {
+        menuItemLogoutBtn.setOnAction(actionEvent -> {
+            getStage().close();
+            Stage loginStage = new Stage();
+            loginStage.setTitle("Library Management System");
+            NavigationManager.switchScene(applicationContext, loginStage, FxmlEnums.FxmlView.LOGIN_VIEW);
+
+        });
     }
 
     public void showNow() {
         populateMemberTabs();
         populateBookTabs();
+
+        allBookTabBtn.setOnSelectionChanged(event -> {
+            if (allBookTabBtn.isSelected()) {
+                populateBookTabs();
+            }
+        });
+        allMemberTabBtn.setOnSelectionChanged(event -> {
+            if (allMemberTabBtn.isSelected()) {
+                populateMemberTabs();
+            }
+        });
 
     }
 

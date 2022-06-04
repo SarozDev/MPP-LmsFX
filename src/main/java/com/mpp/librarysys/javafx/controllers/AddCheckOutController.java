@@ -15,6 +15,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
@@ -97,7 +98,7 @@ public class AddCheckOutController {
             return;
         }
         if (!StringUtils.hasText(memberID) || !StringUtils.hasText(isbn)) {
-            Alert alert = AppFxUtil.createAlert(Alert.AlertType.WARNING, "Oops !!!", "You must provide both fields", "");
+            Alert alert = AppFxUtil.createAlert(Alert.AlertType.WARNING, "Oops !!!", "Please must provide both fields", "");
             alert.showAndWait();
             return;
         }
@@ -108,10 +109,10 @@ public class AddCheckOutController {
         }
         ObservableList<BookCopy> bookCopiesByIsbn = bookService.getAllAvailableBookCopiesByIsbn(isbn);
         if (bookCopiesByIsbn.size() <= 0) {
-            labelMsgBox.setText("Sorry, No any available book copies !!!");
+            labelMsgBox.setText("Sorry, No book copies available !!!");
             return;
         } else {
-            labelMsgBox.setText("Success, Please select book copy  !!!");
+            labelMsgBox.setText("Success, Please select book copy to proceed !!!");
         }
         checkOutRecordBook.setLibraryMember(libraryMember.get());
         comboBookCopy.setItems(bookCopiesByIsbn);
@@ -120,6 +121,11 @@ public class AddCheckOutController {
 
     private void saveCheckOutRecordBook() {
 
+        if (ObjectUtils.isEmpty(dueDateField.getValue())) {
+            Alert alert = AppFxUtil.createAlert(Alert.AlertType.WARNING, "Oops !!!", "Please must select due date", "");
+            alert.showAndWait();
+            return;
+        }
         checkOutRecordBook.setBookCopy(comboBookCopy.getValue());
         checkOutRecordBook.setDueDate(dueDateField.getValue());
         CheckOutRecordBook savedCheckOutRecordBook = checkoutService.addNewCheckOutRecordBook(checkOutRecordBook);
