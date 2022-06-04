@@ -4,9 +4,10 @@ import com.mpp.librarysys.lms.entities.Book;
 import com.mpp.librarysys.lms.entities.CheckOutRecordBook;
 import com.mpp.librarysys.lms.entities.LibraryMember;
 import com.mpp.librarysys.lms.entities.User;
-import com.mpp.librarysys.lms.entities.enums.RoleEnum;
 import com.mpp.librarysys.lms.repository.BookRepository;
 import com.mpp.librarysys.lms.repository.CheckOutRecordBookRepository;
+import com.mpp.librarysys.lms.repository.LibraryMemberRepository;
+import com.mpp.librarysys.lms.util.AppUtil;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class CheckoutService {
@@ -23,9 +23,15 @@ public class CheckoutService {
     private CheckOutRecordBookRepository checkOutRecordBookRepository;
 
     @Autowired
+    private LibraryMemberRepository libraryMemberRepository;
+
+    @Autowired
     private BookRepository bookRepository;
 
     public CheckOutRecordBook addNewCheckOutRecordBook(CheckOutRecordBook checkOutRecordBook) {
+        User authenticatedUser = AppUtil.getAuthenticatedUser();
+        LibraryMember libraryMember = libraryMemberRepository.getLibraryMemberByUserId(authenticatedUser.getId());
+        checkOutRecordBook.setLibraryMember(libraryMember);
         checkOutRecordBookRepository.save(checkOutRecordBook);
         return checkOutRecordBook;
     }

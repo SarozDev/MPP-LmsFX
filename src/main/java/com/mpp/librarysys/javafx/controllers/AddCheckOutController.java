@@ -65,9 +65,8 @@ public class AddCheckOutController {
 
 
     public void initialize() {
-        //populateCheckOutTabs();
         this.btnSave.setOnAction(actionEvent -> {
-
+            saveCheckOutRecordBook();
         });
 
         this.btnSearch.setOnAction(actionEvent -> {
@@ -95,8 +94,9 @@ public class AddCheckOutController {
     private void saveCheckOutRecordBook() {
         CheckOutRecordBook checkOutRecordBook = new CheckOutRecordBook();
 
-        checkOutRecordBook.setCheckOutDate(checkOutRecordBook.getCheckOutDate());
-        checkOutRecordBook.setDueDate(checkOutRecordBook.getDueDate());
+        checkOutRecordBook.setBookCopy(comboBookCopy.getValue());
+        checkOutRecordBook.setCheckOutDate(checkOutDateField.getValue());
+        checkOutRecordBook.setDueDate(dueDateField.getValue());
         checkoutService.addNewCheckOutRecordBook(checkOutRecordBook);
 
     }
@@ -106,25 +106,6 @@ public class AddCheckOutController {
         ObservableList<BookCopy> copies = bookService.getAllBookCopiesForSelectedBook(selectedBook);
         comboBookCopy.setItems(copies);
         comboBookCopy.setConverter(appGeneralObjectConverter.getBookCopyObjStringConverter());
-    }
-
-    private void populateCheckOutTabs() {
-        tabViewCheckOut.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-
-        // Tab 1: User List view
-        List<String> columnList = Arrays.asList("Id", "userName", "firstName");
-        ObservableList<CheckOutRecordBook> userObs = checkoutService.<CheckOutRecordBook>getCheckOutObs();
-        VBox usersTableView = tableFxComponent.createTableViewVBox(userObs, columnList);
-
-        Tab allMembersTab = tabViewCheckOut.getTabs().get(0);
-        allMembersTab.setContent(usersTableView);
-
-//        // Tab 2: User Add view
-//        Tab addMemberTab = membersTabPane.getTabs().get(1);
-//
-//        VBox userForm = addMemberController.userFormVBox;
-        //addMemberTab.setContent(userForm);
-
     }
 
 

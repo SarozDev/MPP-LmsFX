@@ -3,7 +3,11 @@ package com.mpp.librarysys.javafx.controllers;
 import com.mpp.librarysys.javafx.constants.FxmlEnums;
 import com.mpp.librarysys.javafx.helper.AppAbstractFxController;
 import com.mpp.librarysys.javafx.helper.NavigationManager;
+import com.mpp.librarysys.javafx.util.AppFxUtil;
+import com.mpp.librarysys.lms.entities.User;
+import com.mpp.librarysys.lms.services.AuthService;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -19,6 +23,9 @@ public class LoginFxController extends AppAbstractFxController {
 
     @Autowired
     private ApplicationContext applicationContext;
+
+    @Autowired
+    private AuthService authService;
 
     @FXML
     private VBox loginBox;
@@ -47,13 +54,16 @@ public class LoginFxController extends AppAbstractFxController {
     public void onLoginClick() {
 
         // check username/password
-//        if (!usernameField.getText().equals("admin") && !passwordField.getText().equals("admin")) {
-//            String headerText = "Please recheck your username and password, \n if you forgot contact library administrator";
-//            String titleText = "Invalid Username/ Password";
-//            Alert alert = AppFxUtil.createAlert(Alert.AlertType.ERROR, titleText, headerText, "");
-//            alert.showAndWait();
-//            return;
-//        }
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        User user = authService.authenticateUser(username, password);
+        if (null == user) {
+            String headerText = "Please recheck your username and password, \n if you forgot contact library administrator";
+            String titleText = "Invalid Username/ Password";
+            Alert alert = AppFxUtil.createAlert(Alert.AlertType.ERROR, titleText, headerText, "");
+            alert.showAndWait();
+            return;
+        }
 
         // closes current stage
         getStage().close();

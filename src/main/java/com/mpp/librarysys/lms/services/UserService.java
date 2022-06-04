@@ -1,8 +1,10 @@
 package com.mpp.librarysys.lms.services;
 
+import com.mpp.librarysys.lms.entities.LibraryMember;
 import com.mpp.librarysys.lms.entities.User;
 import com.mpp.librarysys.lms.entities.enums.RoleEnum;
 import com.mpp.librarysys.lms.repository.AddressRepository;
+import com.mpp.librarysys.lms.repository.LibraryMemberRepository;
 import com.mpp.librarysys.lms.repository.UserRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,11 +24,26 @@ public class UserService {
     @Autowired
     private AddressRepository addressRepository;
 
-    public User addNewUser(User reqUser) {
-        if (!ObjectUtils.isEmpty(reqUser.getRoles())) {
+    @Autowired
+    private LibraryMemberRepository libraryMemberRepository;
 
+    public Optional<User> findByUserName(String username) {
+        return userRepository.findByUserName(username);
+    }
+
+
+    public User addNewUser(User reqUser) {
+        User savedUser = userRepository.save(reqUser);
+
+        if (!ObjectUtils.isEmpty(reqUser.getRoles())) {
+            boolean hasLibrarianRole = reqUser.getRoles()
+                    .stream().anyMatch(roleEnum -> roleEnum.equals(RoleEnum.LIBRARIAN));
+            if (hasLibrarianRole) {
+                LibraryMember libraryMember = new LibraryMember();
+                libraryMember.setUser(savedUser);
+                libraryMemberRepository.save(libraryMember);
+            }
         }
-        User savedUser = userRepository.saveAndFlush(reqUser);
         return savedUser;
     }
 

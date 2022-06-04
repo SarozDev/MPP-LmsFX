@@ -16,13 +16,14 @@ public class AuthService {
 
     // make password comparison more secured using password encoder
     public User authenticateUser(String username, String password) {
-        Optional<User> optionalUser = userRepository.findById(1L);
+        Optional<User> optionalUser = userRepository.findByUserName(username);
         if (!optionalUser.isPresent()) {
             return null;
         } else {
             User user = optionalUser.get();
             if (user.getPassword().equals(password)) {
                 AppUtil.setAuthenticatedUser(user);
+                User authenticatedUser = AppUtil.getAuthenticatedUser();
                 return user;
             }
         }
